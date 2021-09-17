@@ -1,0 +1,8 @@
+.formInput{
+    width:500px;
+    margin:10px;
+}
+.formInput:after{
+    content:"\A";
+    white-space: pre;
+}
