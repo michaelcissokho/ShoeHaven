@@ -1,8 +1,8 @@
-import React, {useState } from 'react'
-import {useHistory} from 'react-router-dom'
-import '../Form.css'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { Form, Button, Container, Col, Row } from 'react-bootstrap'
 
-const SignupPage = ({signup}) => {
+const SignupPage = ({ signup }) => {
     const INITIAL_STATE = {
         username: '',
         password: '',
@@ -21,7 +21,7 @@ const SignupPage = ({signup}) => {
         setFormData((formData) => (
             {
                 ...formData,
-                [e.target.name]:e.target.value
+                [e.target.name]: e.target.value
             }
         ))
 
@@ -30,9 +30,9 @@ const SignupPage = ({signup}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const {username,password,firstname,lastname,email} = formData
+        const { username, password, firstname, lastname, email } = formData
 
-        signup(username,password,firstname,lastname,email)
+        signup(username, password, firstname, lastname, email)
 
         setFormData(INITIAL_STATE)
 
@@ -40,54 +40,74 @@ const SignupPage = ({signup}) => {
     }
 
     return (
-        <div>
-            <h1> Please Enter Details To Signup Below:</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type='text'
-                    name='username'
-                    placeholder='username'
-                    onChange={handleChange}
-                    value={formData.username}
-                    className='formInput'
-                />
-                <input
-                    type='password'
-                    name='password'
-                    placeholder='password'
-                    onChange={handleChange}
-                    value={formData.password}
-                    className='formInput'
-                />
-                <input
-                    type='text'
-                    name='firstname'
-                    placeholder='First Name'
-                    onChange={handleChange}
-                    value={formData.firstname}
-                    className='formInput'
-                />
-                <input
-                    type='text'
-                    name='lastname'
-                    placeholder='Last Name'
-                    onChange={handleChange}
-                    value={formData.lastname}
-                    className='formInput'
-                />
-                <input
-                    type='text'
-                    name='email'
-                    placeholder='E-Mail'
-                    onChange={handleChange}
-                    value={formData.email}
-                    className='formInput'
-                />
-                <br></br>
-                <br></br>
-                <button>Signup!</button>
-            </form>
-        </div>
+        <Container>
+            <h1>Enter Details To Signup:</h1>
+            <Form onSubmit={handleSubmit}>
+                <Row>
+                    <Form.Group as={Col} className="mb-3">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='username'
+                            placeholder="Username"
+                            value={formData.username}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} className="mb-3">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            name='password'
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                </Row>
+
+                <Row>
+                    <Form.Group as={Col} className="mb-3">
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='firstname'
+                            placeholder="First Name"
+                            value={formData.firstname}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} className="mb-3">
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='lastname'
+                            placeholder="Last Name"
+                            value={formData.lastname}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                </Row>
+
+
+                <Form.Group className="mb-3">
+                    <Form.Label>E-Mail</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name='email'
+                        placeholder="E-Mail"
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+
+                <Button variant="primary" type="submit">
+                    Signup
+                </Button>
+            </Form>
+        </Container>
     )
 }
 

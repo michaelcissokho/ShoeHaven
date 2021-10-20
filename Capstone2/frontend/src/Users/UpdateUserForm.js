@@ -1,16 +1,23 @@
-import React, { useState } from 'react'
-import {useHistory} from 'react-router-dom'
-import '../Form.css'
+import React, { useState, useEffect, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
+import { Form, Container, Button, Row, Col } from 'react-bootstrap'
+import { ShoeHavenApi as api } from '../ShoeHavenApi'
+import UserContext from '../UserContext'
 
-const UpdateUserForm = ({ username, updateUser }) => {
-    const INITIAL_STATE = {
-        password: '',
-        firstname: '',
-        lastname: '',
-        email: ''
-    }
+const UpdateUserForm = ({ updateUser }) => {
+    const currentUser = useContext(UserContext)
+    let username = currentUser.username
+    let token = currentUser.token
 
-    const [formData, setFormData] = useState(INITIAL_STATE)
+    const [formData, setFormData] = useState({password: '', firstname:'', lastname:'',email:''})
+
+    useEffect(() => {
+        async function getUserData() {
+            let res = await api.request(`users/${username}`, {}, 'get', token)
+            setFormData({ password: '', firstname: res.firstname, lastname: res.lastname, email: res.email })
+        }
+        getUserData()
+    }, [username, token])
 
     let history = useHistory()
 
@@ -25,61 +32,78 @@ const UpdateUserForm = ({ username, updateUser }) => {
         ))
     }
 
-    async function handleSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault()
 
         const { password, firstname, lastname, email } = formData
 
         updateUser(password, firstname, lastname, email)
 
-        setFormData(INITIAL_STATE)
+        setFormData({password: '', firstname:'', lastname:'',email:''})
 
         history.push('/home')
     }
 
     return (
-        <div>
-            <h4>Welcome {username} ! Update Your Profile Below:</h4>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type='password'
-                    name='password'
-                    value={formData.password}
-                    placeholder='password'
-                    onChange={handleChange}
-                    className='formInput'
-                />
+        <Container>
+            <h4>Welcome {username} !
                 <br></br>
-                <input
-                    type='text'
-                    name='firstname'
-                    value={formData.firstname}
-                    placeholder='firstname'
-                    onChange={handleChange}
-                    className='formInput'
-                />
                 <br></br>
-                <input
-                    type='text'
-                    name='lastname'
-                    value={formData.lastname}
-                    placeholder='lastname'
-                    onChange={handleChange}
-                    className='formInput'
-                />
-                <br></br>
-                <input
-                    type='text'
-                    name='email'
-                    value={formData.email}
-                    placeholder='E-Mail'
-                    onChange={handleChange}
-                    className='formInput'
-                />
-                <br></br>
-                <button>Update</button>
-            </form>
-        </div>
+                Update Your Profile Below:
+            </h4>
+            <Form onSubmit={handleSubmit}>
+                <Row>
+                    <Form.Group as={Col} className="mb-3">
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='firstname'
+                            placeholder="First Name"
+                            value={formData.firstname}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Col} className="mb-3">
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='lastname'
+                            placeholder="Last Name"
+                            value={formData.lastname}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                </Row>
+
+                <Row>
+                    <Form.Group as={Col} className="mb-3">
+                        <Form.Label>E-Mail</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='email'
+                            placeholder="E-Mail"
+                            value={formData.email}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                    <Form.Group as={Col} className="mb-3">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            name='password'
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+                </Row>
+
+                <Button variant="primary" type="submit">
+                    Update
+            </Button>
+            </Form>
+        </Container>
     )
 }
 

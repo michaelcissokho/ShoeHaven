@@ -1,8 +1,11 @@
-import React, {useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import '../Form.css'
+import { Form, Button, Container } from 'react-bootstrap'
+import UserContext from '../UserContext'
 
-const LoginPage = ({login}) => {
+const LoginPage = ({ login }) => {
+    const currentUser = useContext(UserContext)
+
     const INITIAL_STATE = {
         username: '',
         password: ''
@@ -31,9 +34,11 @@ const LoginPage = ({login}) => {
 
         login(username, password)
 
-        if(localStorage.getItem('username')){
+        if (currentUser) {
             setFormData(INITIAL_STATE)
             history.push('/home')
+        }else{
+            history.push('/login')
         }
     }
 
@@ -42,26 +47,35 @@ const LoginPage = ({login}) => {
             <h5>
                 Enter Details Below To Login:
             </h5>
-            <form onSubmit={handleSubmit}>
-                    <input
-                        type='text'
-                        name='username'
-                        placeholder='username'
-                        onChange={handleChange}
-                        value={formData.username}
-                        className='formInput'
-                    />
-                    <input
-                        type='password'
-                        name='password'
-                        placeholder='password'
-                        onChange={handleChange}
-                        value={formData.password}
-                        className='formInput'
-                    />
-                    <br></br>
-                <button>Login</button>
-            </form>
+            <Container>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3" controlId="formGroupEmail">
+                        <Form.Label>Username</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='username'
+                            placeholder="Enter Username"
+                            value={formData.username}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            name='password'
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit">
+                        Login
+                    </Button>
+                </Form>
+            </Container>
         </div>
     )
 }

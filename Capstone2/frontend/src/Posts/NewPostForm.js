@@ -1,8 +1,11 @@
-import  React, {useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import '../Form.css'
+import { Form, Button, Container } from 'react-bootstrap'
+import UserContext from '../UserContext'
 
-const NewPostForm = ({createPost}) => {
+const NewPostForm = ({ createPost }) => {
+    console.log(useContext(UserContext))
+    
     const INITIAL_STATE = {
         title: '',
         body: '',
@@ -39,36 +42,48 @@ const NewPostForm = ({createPost}) => {
 
     return (
         <div>
-            <h5>Create A New Post</h5>
-            <form onSubmit={handleSubmit}>
-                    <input
-                        type='text'
-                        name='title'
-                        placeholder='Title'
-                        onChange={handleChange}
-                        value={formData.title}
-                        className='formInput'
-                    />
-                    <input
-                        type='text'
-                        name='picture'
-                        placeholder='Link to Photo (optional)'
-                        onChange={handleChange}
-                        value={formData.picture}
-                        className='formInput'
-                    />
-                    <textarea
-                        as='textarea'
-                        rows={10}
-                        name='body'
-                        placeholder='Type Post Here'
-                        onChange={handleChange}
-                        value={formData.body}
-                        className='formInput'
-                    />
-                    <br></br>
-                    <button>Create Post</button>
-                </form>
+            <Container>
+                <h1>Enter Details To Create A Post:</h1>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Title</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='title'
+                            placeholder="Title"
+                            value={formData.title}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Picture</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='picture'
+                            placeholder="Link To Photo (optional)"
+                            value={formData.picture}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Body</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            style={{height: '500px'}}
+                            name='body'
+                            placeholder="Post"
+                            value={formData.body}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit">
+                        Create Post
+                    </Button>
+                </Form>
+            </Container>
         </div>
     )
 }
