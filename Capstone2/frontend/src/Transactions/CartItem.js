@@ -1,13 +1,18 @@
 import React from 'react'
+import {Card, Button} from 'react-bootstrap'
 
-const CartItem = ({id, username, title, picture, price, removeFromCart}) => {
-    return(
+const CartItem = ({ id, username, title, picture, price, removeFromCart }) => {
+    return (
         <div>
-            <h3>{title}</h3>
-            <img src={picture} alt="Cart Item"/>
-            <p><b>{price}</b></p>
-            <h6>Seller:{username}</h6>
-            <button onClick={() => removeFromCart(id)}> Remove From Cart </button>
+            <Card style={{ width: '18rem' }}>
+                <Card.Img variant="top" src={picture} alt='Cool Listing' />
+                <Card.Body>
+                    <Card.Title>{title}</Card.Title>
+                    <Card.Text>${price}</Card.Text>
+                    <Button variant='warning' onClick={() => removeFromCart(id)}> Remove From Cart </Button>
+                </Card.Body>
+                <Card.Footer>Seller: {username} </Card.Footer>
+            </Card>
         </div>
     )
 }

@@ -6,7 +6,6 @@ CREATE DATABASE shoe_haven;
 \connect shoe_haven
 
 \i shoe_haven-schema.sql
--- \i shoe_haven.sql
 
 \echo 'Delete and recreate test_shoe_haven db?'
 \prompt 'Return for yes or control-C to cancel > ' foo

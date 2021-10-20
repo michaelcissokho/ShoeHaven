@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { Container, Form, Button} from 'react-bootstrap'
 
-const CreateCommentForm = ({ addComment }) => {
+const CreateCommentForm = ({ addComment }) => {    
     const INITIAL_STATE = {
         body: ''
     }
@@ -13,7 +14,7 @@ const CreateCommentForm = ({ addComment }) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const {body} = formData
+        const { body } = formData
 
         addComment(body)
 
@@ -36,17 +37,23 @@ const CreateCommentForm = ({ addComment }) => {
 
     return (
         <div>
-            <h1>Type Your Comment Below:</h1>
-            <form onSubmit={handleSubmit}>
-                <textarea
-                    onChange={handleChange}
-                    name='body'
-                    value={formData.body}
-                    placeholder='Type Your Comment Here'
-                    rows={2}
-                /><br></br>
-                <button> Submit </button>
-            </form>
+            <Container>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3">
+                        <Form.Control
+                            as="textarea"
+                            name='body'
+                            placeholder="Type Your Comment Here"
+                            value={formData.body}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit">
+                        Submit
+                    </Button>
+                </Form>
+            </Container>
         </div>
     )
 }

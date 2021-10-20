@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { Form, Container, Button } from 'react-bootstrap'
 
-const CreateListingForm = ({createListing}) => {
+const CreateListingForm = ({ createListing }) => {
+
     const INITIAL_STATE = {
         title: '',
         picture: '',
@@ -39,45 +41,59 @@ const CreateListingForm = ({createListing}) => {
 
     return (
         <div>
-            <h5>Enter Details To Create A Listing</h5>
-            <form onSubmit={handleSubmit}>
+            <Container>
+                <h1>New Listing:</h1>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Title</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='title'
+                            placeholder="Item Name"
+                            value={formData.title}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
 
-                <input
-                    type='text'
-                    onChange={handleChange}
-                    name='title'
-                    value={formData.title}
-                    style={{ width: '500px' }}
-                    placeholder='Item Name'
-                />
-                <input
-                    type='text'
-                    onChange={handleChange}
-                    name='picture'
-                    value={formData.picture}
-                    style={{ width: '500px' }}
-                    placeholder='image URL'
-                />
-                <input
-                    type='number'
-                    onChange={handleChange}
-                    name='price'
-                    value={formData.price}
-                    placeholder='Price'
-                    style={{ width: '500px' }}
-                    className="mb-3"
-                />
-                <textarea
-                    rows={10}
-                    onChange={handleChange}
-                    name='details'
-                    value={formData.details}
-                    placeholder='Details'
-                    style={{ width: '500px' }}
-                />
-                <br></br>
-                <button> Submit </button>
-            </form>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Picture</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='picture'
+                            placeholder="Link to Picture Of Item"
+                            value={formData.picture}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Price</Form.Label>
+                        <Form.Control
+                            type="number"
+                            name='price'
+                            placeholder="price"
+                            value={formData.price}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Details</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            style={{height: '500px'}}
+                            name='details'
+                            placeholder="Description"
+                            value={formData.details}
+                            onChange={handleChange}
+                        />
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit">
+                        Add New Lisiting
+                    </Button>
+                </Form>
+            </Container>
         </div>
     )
 }

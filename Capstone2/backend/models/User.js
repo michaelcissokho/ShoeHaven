@@ -80,16 +80,30 @@ class User {
     }
 
     static async update(username, {password, firstname, lastname, email}){
-        const result = await db.query(`
-        UPDATE users
-        SET password=$1,
-            firstname=$2,
-            lastname=$3,
-            email=$4
-        WHERE username=$5
-        RETURNING *`, [password, firstname, lastname, email, username])
+        if(password.length){
+            const newPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR)
 
-        return result.rows[0]
+            const result = await db.query(`
+            UPDATE users
+            SET password=$1,
+                firstname=$2,
+                lastname=$3,
+                email=$4
+            WHERE username=$5
+            RETURNING username, firstname, lastname, email`, [newPassword, firstname, lastname, email, username])
+    
+            return result.rows[0]
+        }else{
+            const result = await db.query(`
+            UPDATE users
+            SET firstname=$1,
+                lastname=$2,
+                email=$3
+            WHERE username=$4
+            RETURNING username, firstname, lastname, email`, [firstname, lastname, email, username])
+    
+            return result.rows[0]
+        }
     }
 
     static async remove(username){

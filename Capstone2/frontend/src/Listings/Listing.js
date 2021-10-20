@@ -1,15 +1,30 @@
-import React from 'react'
+import React, {useContext} from 'react'
+import UserContext from '../UserContext'
+import { Card, Button, Row, Col } from 'react-bootstrap'
 
-const Listing = ({id, username, title, picture, price, details, addToCart, deleteListing}) => {
-    return(
+const Listing = ({ id, username, title, picture, price, details, addToCart, deleteListing }) => {
+    const currentUser = useContext(UserContext)
+    return (
         <div>
-            <h6> {username} </h6>
-            <h5> {title} </h5>
-            <img src={picture} alt='Cool Listing Pic'/>
-            <h3> {price} </h3>
-            <p> {details} </p>
-            <button onClick={() => addToCart({id, username, title, picture, price})}> Add To Cart </button>
-            {(localStorage.getItem('username') === username) && <button onClick={() => deleteListing(id)}>Delete Listing</button> }
+            <Card style={{ width: '18rem' }}>
+                <Card.Header> Seller: {username} </Card.Header>
+                <Card.Img variant="top" src={picture} alt='Cool Listing' />
+                <Card.Body>
+                    <Card.Title>{title}</Card.Title>
+                    <Card.Text>{details}</Card.Text>
+                    <Card.Text>Price: ${price}</Card.Text>
+                    <Row>
+                        <Button as={Col} onClick={() => addToCart({ id, username, title, picture, price })} variant="success">
+                            Add To Cart
+                    </Button>
+                        {(currentUser.username === username) &&
+                            <Button as={Col} onClick={() => deleteListing(id)}
+                                variant='danger'>
+                                Delete Listing
+                        </Button>}
+                    </Row>
+                </Card.Body>
+            </Card>
         </div>
     )
 }
