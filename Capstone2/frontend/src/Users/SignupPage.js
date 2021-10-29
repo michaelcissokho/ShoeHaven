@@ -36,7 +36,7 @@ const SignupPage = ({ signup }) => {
 
         setFormData(INITIAL_STATE)
 
-        history.push('/home')
+        history.push('/listings')
     }
 
     return (

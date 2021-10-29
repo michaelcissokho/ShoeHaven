@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
-import UserContext from '../UserContext'
+import React, { useState, useEffect } from 'react'
 import { ShoeHavenApi as api } from '../ShoeHavenApi'
 import Comment from '../Comments/Comment'
 import { v4 as uuid } from 'uuid'
@@ -7,30 +6,25 @@ import CreateCommentForm from '../Comments/CreateComment'
 import { Card, Button } from 'react-bootstrap'
 
 const Post = ({ id, username, title, body, picture, deletePost }) => {
-    const currentUser = useContext(UserContext)
-    let token = currentUser.token
-
     const [comments, setComments] = useState([])
     const [writingComment, setWritingComment] = useState(false)
 
     useEffect(() => {
         async function getCommentsForPost() {
-            const response = await api.request(`posts/${id}/comments`, {}, 'get', token)
-
+            const response = await api.request(`posts/${id}/comments`)
             setComments(response)
         }
         getCommentsForPost()
-    }, [id, token, writingComment])
+    }, [id, writingComment])
 
     async function addComment(body) {
-        await api.request(`comments/new`, { postId: id, body }, 'post', token)
-
+        await api.request(`comments/new`, { postId: id, body }, 'post')
         setWritingComment(false)
     }
 
-    async function deleteComment(id) {
-        await api.request(`comments/${id}`, {}, 'delete', token)
-        setComments(comments.filter((comment) => comment.id !== id))
+    async function deleteComment(commentId) {
+        await api.request(`comments/${commentId}`, {}, 'delete')
+        setComments(comments.filter((comment) => comment.id !== commentId))
     }
 
     return (
@@ -42,6 +36,7 @@ const Post = ({ id, username, title, body, picture, deletePost }) => {
                     <Card.Title>{title}</Card.Title>
                     <Card.Text>{body}</Card.Text>
                     <Card.Title>Comments:</Card.Title>
+                    
                     {comments.map((comment) =>
                         <Comment
                             key={uuid()}
@@ -51,10 +46,13 @@ const Post = ({ id, username, title, body, picture, deletePost }) => {
                             timecommented={comment.timecommented}
                             deleteComment={deleteComment}
                         />)}
+
                     {writingComment&&<CreateCommentForm addComment={addComment} />}
+
                     {!writingComment && <Button variant='warning' onClick={() => setWritingComment(true)}> Add A Comment </Button>}
+
                     <br></br>
-                    {(currentUser.username === username) &&
+                    {(localStorage.getItem('username') === username) &&
                         <Button onClick={() => deletePost(id)} variant='danger'>
                             Delete Post
                             </Button>

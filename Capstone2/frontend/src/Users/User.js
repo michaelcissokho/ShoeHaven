@@ -1,23 +1,20 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ShoeHavenApi as api } from '../ShoeHavenApi'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Card, Button, Row, Col, Container } from 'react-bootstrap'
-import UserContext from '../UserContext'
 
 const User = () => {
-    const currentUser = useContext(UserContext)
-    let username = currentUser.username
-    let token = currentUser.token
+   let {username} = useParams()
 
     const [profile, setProfile] = useState([])
 
     useEffect(() => {
         async function profile() {
-            let res = await api.request(`users/${username}`,{}, 'get', token)
+            let res = await api.request(`users/${username}`)
             setProfile(res)
         }
         profile()
-    }, [username,token])
+    }, [username])
 
     return (
         <div>

@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 import { Form, Container, Button } from 'react-bootstrap'
 
 const CreateListingForm = ({ createListing }) => {
-
     const INITIAL_STATE = {
         title: '',
         picture: '',
@@ -22,7 +21,7 @@ const CreateListingForm = ({ createListing }) => {
 
         createListing(title, picture, price, details)
 
-        history.push('/home')
+        history.push('/listings')
 
         setFormData(INITIAL_STATE)
 

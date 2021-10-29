@@ -1,23 +1,27 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useHistory, useParams } from 'react-router-dom'
 import { Form, Container, Button, Row, Col } from 'react-bootstrap'
 import { ShoeHavenApi as api } from '../ShoeHavenApi'
-import UserContext from '../UserContext'
 
 const UpdateUserForm = ({ updateUser }) => {
-    const currentUser = useContext(UserContext)
-    let username = currentUser.username
-    let token = currentUser.token
+    let {username} = useParams()
 
-    const [formData, setFormData] = useState({password: '', firstname:'', lastname:'',email:''})
+    const INITIAL_VALUES = {
+        password: '',
+        firstname: '',
+        lastname: '',
+        email: ''
+    }
+
+    const [formData, setFormData] = useState(INITIAL_VALUES)
 
     useEffect(() => {
         async function getUserData() {
-            let res = await api.request(`users/${username}`, {}, 'get', token)
+            let res = await api.request(`users/${username}`)
             setFormData({ password: '', firstname: res.firstname, lastname: res.lastname, email: res.email })
         }
         getUserData()
-    }, [username, token])
+    }, [username])
 
     let history = useHistory()
 
@@ -39,9 +43,9 @@ const UpdateUserForm = ({ updateUser }) => {
 
         updateUser(password, firstname, lastname, email)
 
-        setFormData({password: '', firstname:'', lastname:'',email:''})
+        setFormData(INITIAL_VALUES)
 
-        history.push('/home')
+        history.push('/listings')
     }
 
     return (

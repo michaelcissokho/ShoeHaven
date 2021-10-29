@@ -20,8 +20,8 @@ CREATE TABLE listings (
 CREATE TABLE sales (
   id SERIAL PRIMARY KEY,
   listing SERIAL REFERENCES listings,
-  seller VARCHAR(25) REFERENCES users,
-  buyer VARCHAR(25) REFERENCES users,
+  seller VARCHAR(25) REFERENCES users ON DELETE CASCADE,
+  buyer VARCHAR(25) REFERENCES users ON DELETE CASCADE,
   returned BOOLEAN
 );
 

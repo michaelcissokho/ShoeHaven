@@ -35,7 +35,7 @@ const CheckoutForm = ({ cart, checkoutItems }) => {
 
         setFormData(INITIAL_STATE)
 
-        history.push('/home')
+        history.push('/listings')
     }
 
     return (

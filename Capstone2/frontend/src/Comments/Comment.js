@@ -1,9 +1,7 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import { Card, Button } from 'react-bootstrap'
-import UserContext from '../UserContext'
 
 const Comment = ({ id, username, body, timecommented, deleteComment }) => {
-    const currentUser = useContext(UserContext)
 
     return (
         <div>
@@ -11,7 +9,7 @@ const Comment = ({ id, username, body, timecommented, deleteComment }) => {
                 <Card.Body>
                     <Card.Text> {username} @ {timecommented} </Card.Text>
                     <Card.Text>{body}</Card.Text>
-                    {(currentUser.username === username) &&
+                    {(localStorage.getItem('username') === username) &&
                         <Button variant='danger' onClick={() => deleteComment(id)}>
                             Delete Comment
                     </Button>}

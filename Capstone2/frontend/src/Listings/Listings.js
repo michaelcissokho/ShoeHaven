@@ -1,22 +1,19 @@
-import React, { useEffect, useState, useContext } from 'react'
-import UserContext from '../UserContext'
+import React, { useEffect, useState } from 'react'
 import Listing from './Listing'
 import { ShoeHavenApi as api } from '../ShoeHavenApi'
 import { v4 as uuid } from 'uuid'
 import { Container, Row } from 'react-bootstrap'
 
 const Listings = ({ addToCart, deleteListing }) => {
-    const currentUser = useContext(UserContext)
-    let token = currentUser.token
-
     const [listings, setListings] = useState([])
+    
     useEffect(() => {
         async function pullListings() {
-            let res = await api.request(`listings`,{},'get',token)
+            let res = await api.request(`listings`)
             setListings(res.filter((item) => item.sold === false))
         }
         pullListings()
-    }, [token])
+    }, [])
 
     return (
         <div>

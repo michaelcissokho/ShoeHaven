@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot with no itms 1`] = `
+<DocumentFragment>
+  <div>
+    <h1>
+      Cart:
+    </h1>
+    <br />
+    <br />
+    <a
+      class="btn btn-success"
+      href="/checkout"
+      role="button"
+      tabindex="0"
+    >
+      Checkout
+    </a>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`renders checkout form properly 1`] = `
+<DocumentFragment>
+  <div>
+    <h3>
+      Cart Total: $100
+    </h3>
+    <div
+      class="container"
+    >
+      <h1>
+        Enter Details To Checkout Your Items:
+      </h1>
+      <form
+        class=""
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="mb-3 col"
+          >
+            <label
+              class="form-label"
+            >
+              First Name
+            </label>
+            <input
+              class="form-control"
+              name="firstname"
+              placeholder="firstname"
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="mb-3 col"
+          >
+            <label
+              class="form-label"
+            >
+              Last Name
+            </label>
+            <input
+              class="form-control"
+              name="lastname"
+              placeholder="Last Name"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="mb-3"
+        >
+          <label
+            class="form-label"
+          >
+            Address
+          </label>
+          <input
+            class="form-control"
+            name="address"
+            placeholder="Address"
+            type="text"
+            value=""
+          />
+        </div>
+        <div
+          class="mb-3"
+        >
+          <label
+            class="form-label"
+          >
+            Card Number
+          </label>
+          <input
+            class="form-control"
+            name="card"
+            placeholder="Card Number"
+            type="text"
+            value=""
+          />
+        </div>
+        <button
+          class="btn btn-success"
+          type="submit"
+        >
+          Checkout
+        </button>
+      </form>
+    </div>
+  </div>
+  )
+</DocumentFragment>
+`;

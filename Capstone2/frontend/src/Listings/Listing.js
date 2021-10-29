@@ -1,9 +1,8 @@
-import React, {useContext} from 'react'
-import UserContext from '../UserContext'
+import React from 'react'
 import { Card, Button, Row, Col } from 'react-bootstrap'
 
 const Listing = ({ id, username, title, picture, price, details, addToCart, deleteListing }) => {
-    const currentUser = useContext(UserContext)
+
     return (
         <div>
             <Card style={{ width: '18rem' }}>
@@ -17,7 +16,7 @@ const Listing = ({ id, username, title, picture, price, details, addToCart, dele
                         <Button as={Col} onClick={() => addToCart({ id, username, title, picture, price })} variant="success">
                             Add To Cart
                     </Button>
-                        {(currentUser.username === username) &&
+                        {(localStorage.getItem('username') === username) &&
                             <Button as={Col} onClick={() => deleteListing(id)}
                                 variant='danger'>
                                 Delete Listing

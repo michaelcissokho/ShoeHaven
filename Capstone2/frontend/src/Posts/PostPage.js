@@ -1,24 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ShoeHavenApi as api } from '../ShoeHavenApi'
 import { v4 as uuid } from 'uuid'
 import Post from './Post'
 import { Link } from 'react-router-dom'
-import UserContext from '../UserContext'
 import {Button} from 'react-bootstrap'
 
 const PostPage = ({ deletePost }) => {
-    const currentUser = useContext(UserContext)
-    let token = currentUser.token
-
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
         async function populatePage() {
-            let res = await api.request(`posts`, {}, 'get', token)
+            let res = await api.request(`posts`)
             setPosts(res)
         }
         populatePage()
-    }, [token])
+    }, [])
 
     return (
         <div>

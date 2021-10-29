@@ -1,11 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Form, Button, Container } from 'react-bootstrap'
-import UserContext from '../UserContext'
 
-const NewPostForm = ({ createPost }) => {
-    console.log(useContext(UserContext))
-    
+const NewPostForm = ({ createPost }) => {    
     const INITIAL_STATE = {
         title: '',
         body: '',

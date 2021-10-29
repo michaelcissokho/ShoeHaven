@@ -1,11 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Form, Button, Container } from 'react-bootstrap'
-import UserContext from '../UserContext'
 
 const LoginPage = ({ login }) => {
-    const currentUser = useContext(UserContext)
-
     const INITIAL_STATE = {
         username: '',
         password: ''
@@ -32,14 +29,14 @@ const LoginPage = ({ login }) => {
 
         const { username, password } = formData
 
-        login(username, password)
-
-        if (currentUser) {
-            setFormData(INITIAL_STATE)
-            history.push('/home')
-        }else{
-            history.push('/login')
-        }
+        login(username, password).then(() => {
+            if (localStorage.getItem('username')) {
+                setFormData(INITIAL_STATE)
+                history.push('/listings')
+            }else{
+                history.push('/login')
+            }
+        })
     }
 
     return (
